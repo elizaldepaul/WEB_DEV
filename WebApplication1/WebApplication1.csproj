@@ -242,6 +242,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\log_in.css" />
     <Content Include="Content\register.css" />
+    <Content Include="Content\sb-admin-2.css" />
+    <Content Include="Content\sb-admin-2.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
@@ -249,8 +251,8 @@
     <Content Include="Global.asax" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -324,13 +326,15 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\New_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\ndex.cshtml" />
     <Content Include="Views\Home\Layout.cshtml" />
     <Content Include="Web.Config" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\UserLayout.cshtml" />
+    <Content Include="Views\Home\ShowUser.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
