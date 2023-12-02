@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="UsersModelStoreContainer" CdmEntityContainer="UsersEntities">
+  <EntityContainerMapping StorageEntityContainer="final_projectModelStoreContainer" CdmEntityContainer="final_projectEntities">
     <EntitySetMapping Name="roles">
-      <EntityTypeMapping TypeName="UsersModel.role">
+      <EntityTypeMapping TypeName="final_projectModel.role">
         <MappingFragment StoreEntitySet="role">
-          <ScalarProperty Name="Role_id" ColumnName="Role_id" />
-          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="UsersModel.user">
+      <EntityTypeMapping TypeName="final_projectModel.user">
         <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="User_id" ColumnName="User_id" />
-          <ScalarProperty Name="firstname" ColumnName="firstname" />
-          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
           <ScalarProperty Name="age" ColumnName="age" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

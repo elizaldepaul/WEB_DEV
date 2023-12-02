@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="UsersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="final_projectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="role">
     <Key>
-      <PropertyRef Name="Role_id" />
+      <PropertyRef Name="role_id" />
     </Key>
-    <Property Name="Role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Rolename" Type="nchar" MaxLength="10" />
+    <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_name" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="users">
     <Key>
-      <PropertyRef Name="User_id" />
+      <PropertyRef Name="user_id" />
     </Key>
-    <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="firstname" Type="nchar" MaxLength="10" />
-    <Property Name="lastname" Type="nchar" MaxLength="10" />
-    <Property Name="age" Type="nchar" MaxLength="10" />
-    <Property Name="email" Type="nchar" MaxLength="10" />
-    <Property Name="address" Type="nchar" MaxLength="10" />
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="first_name" Type="nchar" MaxLength="50" />
+    <Property Name="last_name" Type="nchar" MaxLength="50" />
+    <Property Name="age" Type="int" />
+    <Property Name="email" Type="nchar" MaxLength="20" />
+    <Property Name="address" Type="nchar" MaxLength="100" />
     <Property Name="gender" Type="nchar" MaxLength="10" />
     <Property Name="password" Type="nchar" MaxLength="10" />
-    <Property Name="Role_id" Type="int" />
+    <Property Name="role_id" Type="int" />
   </EntityType>
   <Association Name="FK_users_role">
     <End Role="role" Type="Self.role" Multiplicity="0..1" />
     <End Role="users" Type="Self.users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="role">
-        <PropertyRef Name="Role_id" />
+        <PropertyRef Name="role_id" />
       </Principal>
       <Dependent Role="users">
-        <PropertyRef Name="Role_id" />
+        <PropertyRef Name="role_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="UsersModelStoreContainer">
+  <EntityContainer Name="final_projectModelStoreContainer">
     <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">
