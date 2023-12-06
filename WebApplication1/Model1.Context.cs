@@ -13,10 +13,10 @@ namespace WebApplication1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class final_projectEntities : DbContext
+    public partial class friendsEntities : DbContext
     {
-        public final_projectEntities()
-            : base("name=final_projectEntities")
+        public friendsEntities()
+            : base("name=friendsEntities")
         {
         }
     

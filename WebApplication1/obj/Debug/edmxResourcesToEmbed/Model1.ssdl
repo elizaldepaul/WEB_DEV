@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="final_projectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="friendsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="role">
     <Key>
       <PropertyRef Name="role_id" />
     </Key>
     <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="role_name" Type="nchar" MaxLength="10" />
+    <Property Name="role" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="users">
     <Key>
@@ -15,10 +15,10 @@
     <Property Name="first_name" Type="nchar" MaxLength="50" />
     <Property Name="last_name" Type="nchar" MaxLength="50" />
     <Property Name="age" Type="int" />
-    <Property Name="email" Type="nchar" MaxLength="20" />
-    <Property Name="address" Type="nchar" MaxLength="100" />
-    <Property Name="gender" Type="nchar" MaxLength="10" />
-    <Property Name="password" Type="nchar" MaxLength="10" />
+    <Property Name="email" Type="nchar" MaxLength="50" />
+    <Property Name="address" Type="nchar" MaxLength="50" />
+    <Property Name="gender" Type="nchar" MaxLength="50" />
+    <Property Name="password" Type="nchar" MaxLength="50" />
     <Property Name="role_id" Type="int" />
   </EntityType>
   <Association Name="FK_users_role">
@@ -33,7 +33,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="final_projectModelStoreContainer">
+  <EntityContainer Name="friendsModelStoreContainer">
     <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">

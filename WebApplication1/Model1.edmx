@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="final_projectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="friendsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="role_id" />
           </Key>
           <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role_name" Type="nchar" MaxLength="10" />
+          <Property Name="role" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -20,10 +20,10 @@
           <Property Name="first_name" Type="nchar" MaxLength="50" />
           <Property Name="last_name" Type="nchar" MaxLength="50" />
           <Property Name="age" Type="int" />
-          <Property Name="email" Type="nchar" MaxLength="20" />
-          <Property Name="address" Type="nchar" MaxLength="100" />
-          <Property Name="gender" Type="nchar" MaxLength="10" />
-          <Property Name="password" Type="nchar" MaxLength="10" />
+          <Property Name="email" Type="nchar" MaxLength="50" />
+          <Property Name="address" Type="nchar" MaxLength="50" />
+          <Property Name="gender" Type="nchar" MaxLength="50" />
+          <Property Name="password" Type="nchar" MaxLength="50" />
           <Property Name="role_id" Type="int" />
         </EntityType>
         <Association Name="FK_users_role">
@@ -38,7 +38,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="final_projectModelStoreContainer">
+        <EntityContainer Name="friendsModelStoreContainer">
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">
@@ -50,13 +50,13 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="final_projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="friendsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="role_id" />
           </Key>
           <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="role1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="users" Relationship="Self.FK_users_role" FromRole="role" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
@@ -67,10 +67,10 @@
           <Property Name="first_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="last_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="age" Type="Int32" />
-          <Property Name="email" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="address" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="role_id" Type="Int32" />
           <NavigationProperty Name="role" Relationship="Self.FK_users_role" FromRole="users" ToRole="role" />
         </EntityType>
@@ -86,7 +86,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="final_projectEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="friendsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">
@@ -99,17 +99,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="final_projectModelStoreContainer" CdmEntityContainer="final_projectEntities">
+        <EntityContainerMapping StorageEntityContainer="friendsModelStoreContainer" CdmEntityContainer="friendsEntities">
           <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="final_projectModel.role">
+            <EntityTypeMapping TypeName="friendsModel.role">
               <MappingFragment StoreEntitySet="role">
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="role1" ColumnName="role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="final_projectModel.user">
+            <EntityTypeMapping TypeName="friendsModel.user">
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />

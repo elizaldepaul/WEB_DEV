@@ -26,13 +26,21 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        public ActionResult AddActivities()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+
 
         public ActionResult AddUserToDatabase(FormCollection fc)
         {
             String firstName = fc["firstname"];
             String lastName = fc["lastname"];
             String email = fc["email"];
-            int age = int.Parse(fc["age"]);
+            int age = Convert.ToInt16(fc["age"]);
             String address = fc["address"]; 
             String gender = fc["gender"];
             String password = fc["password"];
@@ -49,7 +57,7 @@ namespace WebApplication1.Controllers
 
 
 
-            final_projectEntities fe = new final_projectEntities();
+            friendsEntities fe = new friendsEntities();
             fe.users.Add(use);
             fe.SaveChanges();
 
@@ -61,7 +69,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult UserUpdate()
         {
-            final_projectEntities update_users = new final_projectEntities();
+            friendsEntities update_users = new friendsEntities();
             user u = (from a in update_users.users where a.user_id == 2 select a).FirstOrDefault();
 
             u.first_name = "Paul HEnry";
@@ -80,7 +88,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult UserDelete()
         {
-            final_projectEntities rdbe = new final_projectEntities();
+            friendsEntities rdbe = new friendsEntities();
             user u = (from a in rdbe.users
                       where a.user_id == 2
                       select a).FirstOrDefault();
@@ -91,7 +99,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult ShowUser()
         {
-            final_projectEntities user = new final_projectEntities();
+            friendsEntities user = new friendsEntities();
 
             var userList = (from a in user.users select a).ToList();
 

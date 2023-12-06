@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="final_projectModelStoreContainer" CdmEntityContainer="final_projectEntities">
+  <EntityContainerMapping StorageEntityContainer="friendsModelStoreContainer" CdmEntityContainer="friendsEntities">
     <EntitySetMapping Name="roles">
-      <EntityTypeMapping TypeName="final_projectModel.role">
+      <EntityTypeMapping TypeName="friendsModel.role">
         <MappingFragment StoreEntitySet="role">
           <ScalarProperty Name="role_id" ColumnName="role_id" />
-          <ScalarProperty Name="role_name" ColumnName="role_name" />
+          <ScalarProperty Name="role1" ColumnName="role" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="final_projectModel.user">
+      <EntityTypeMapping TypeName="friendsModel.user">
         <MappingFragment StoreEntitySet="users">
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="first_name" ColumnName="first_name" />
