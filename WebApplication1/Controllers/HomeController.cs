@@ -28,10 +28,15 @@ namespace WebApplication1.Controllers
         }
         public ActionResult AddActivities()
         {
-            ViewBag.Message = "Your contact page.";
+            friendsEntities1 user = new friendsEntities1();
 
+            var userList = (from a in user.users select a).ToList();
+
+            ViewData["UserList"] = userList;
             return View();
-        }
+        } 
+
+       
 
 
 
@@ -57,38 +62,36 @@ namespace WebApplication1.Controllers
 
 
 
-            friendsEntities fe = new friendsEntities();
+            friendsEntities1 fe = new friendsEntities1();
             fe.users.Add(use);
             fe.SaveChanges();
 
             //insert the code that will save these information to the DB
 
-            return RedirectToAction("Layout");
+            return RedirectToAction("ShowUser");
         }
 
 
+      //  [HttpPost]
         public ActionResult UserUpdate()
         {
-            friendsEntities update_users = new friendsEntities();
-            user u = (from a in update_users.users where a.user_id == 2 select a).FirstOrDefault();
+            //friendsEntities1 update_users = new friendsEntities1();
+            // user u = update_users.users.FirstOrDefault(a => a.user_id == id);
 
-            u.first_name = "Paul HEnry";
-            u.last_name = "Elizalde";
-            u.email = "paul@gmail.com";
-            u.address = "bantayan";
-            u.age = 20;
-            u.gender = "male";
-            u.password = "123";
-            u.role_id = 1;
+           // int x = id;
 
-            update_users.SaveChanges();
-
+            // if (u != null)
+            // {
+            //    u.first_name = newFirstName;
+            // update_users.SaveChanges();
+            //  }
             return View();
-
+            // return RedirectToAction("UserUpdate"); // Redirect to the appropriate action or view
         }
+
         public ActionResult UserDelete()
         {
-            friendsEntities rdbe = new friendsEntities();
+            friendsEntities1 rdbe = new friendsEntities1();
             user u = (from a in rdbe.users
                       where a.user_id == 2
                       select a).FirstOrDefault();
@@ -99,7 +102,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult ShowUser()
         {
-            friendsEntities user = new friendsEntities();
+            friendsEntities1 user = new friendsEntities1();
 
             var userList = (from a in user.users select a).ToList();
 

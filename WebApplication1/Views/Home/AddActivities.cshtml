@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "AddActivities";
     Layout = "~/Views/Shared/UserLayout.cshtml";
+    var userList = (IEnumerable<user>)ViewData["UserList"];
 }
 
 <!-- Content Wrapper -->
@@ -99,8 +100,8 @@
                     text-align: center;
                 }
 
-                #wrapper #content-wrapper {
-                    height: 600px;
+                 #content-wrapper {
+                    height: 1000px;
                     overflow: auto;
                 }
             </style>
@@ -260,92 +261,96 @@
 
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
-                        <?php if ($result->num_rows > 0) { ?>
+
+
                         <thead>
                             <tr>
-                                <th>activity_name</th>
-                                <th>activity_date</th>
-                                <th>activity_time</th>
-                                <th>activity_location</th>
-                                <th>activity_ootd</th>
-                                <th>date_created</th>
-                                <th>last_updated_time</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Address</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
-                                <th>activity_name</th>
-                                <th>activity_date</th>
-                                <th>activity_time</th>
-                                <th>activity_location</th>
-                                <th>activity_ootd</th>
-                                <th>date_created</th>
-                                <th>last_updated_time</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Address</th>
                                 <th>Action</th>
 
                             </tr>
-                            <?php } else { ?>
-                            No Activity Yet!
-                            <?php } ?>
+
                         </tfoot>
-                        <tbody>
-                            <?php while ($row = $show_activity->fetch_assoc()) { ?>
+
+                        @{
+                            foreach (var item in userList)
+                            {
+                                <tbody>
 
 
 
-                            <tr>
-                                <td>
-                                    <?php echo $row["activity_name"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["activity_date"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo date("h:i A", strtotime($row["activity_time"])); ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["activity_location"]; ?>
-                                </td>
-                                <td>
-
-                                    <img width="100px" height="100px" src="activity_image/<?php echo $row[" activity_ootd"]; ?>" alt="">
-                                </td>
-                                <td>
-                                    <?php echo date("F j, Y h:i A", strtotime($row["date_created"]));
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    if ($row["last_updated_time"] !== null) {
-                                    echo date("F j, Y h:i A", strtotime($row["last_updated_time"]));
-                                    } else {
-                                    echo "N/A"; // Or any other     suitable indicator for "not updated yet"
-                                    }
-                                    ?>
-                                </td>
+                                    <tr>
+                                        <td>
+                                            @item.first_name
+                                        </td>
+                                        <td>
+                                            @item.last_name
+                                        </td>
+                                        <td>
 
 
-                                <td>
-                                    <form action="php/edit_activity.php" method="post">
+                                            @item.age
+                                        </td>
+                                        <td>
+                                            @item.email
 
-                                        <input class="" type="text" name="edit_activity_id" id="edit_activity_id"
-                                               value="<?php echo $row['activity_id']; ?>">
-                                        <button id="<?php echo $row['activity_id']; ?>"
-                                                class="btn btn-primary  mb-2 btn-user  btn-block edit_activity_id"
-                                                name="edit" name="act_id" type="submit">
-                                            Edit
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                                        </td>
+                                        <td>
+                                            @item.gender
+                                        </td>
+                                        <td>
+                                            @item.address
+                                        </td>
 
-                            <?php } ?>
-                        </tbody>
+
+                                        <td>
+                                            <form action="UserUpdate" method="post">
+
+                                                <input type="hidden" name="id" value="@item.user_id">
+                                                <button id=""
+                                                        class="btn btn-primary  mb-2 btn-user  btn-block edit_activity_id"
+                                                        name="edit" type="submit">
+                                                    Edit
+                                                </button>
+                                            </form>
+                                            <form action="UserDelete" method="post">
+                                                <input type="hidden" name="id" value="@item.user_id">
+                                                <button id="<?php echo $row['activity_id']; ?>"
+                                                        class="btn btn-primary  mb-2 btn-user  btn-block edit_activity_id"
+                                                        name="delete" type="submit">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+
+                            }
+
+
+                        }
                     </table>
 
-                </div>
+                    </div>
             </div>
         </div>
 

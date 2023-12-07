@@ -15,10 +15,10 @@
     <Property Name="first_name" Type="nchar" MaxLength="50" />
     <Property Name="last_name" Type="nchar" MaxLength="50" />
     <Property Name="age" Type="int" />
-    <Property Name="email" Type="nchar" MaxLength="50" />
-    <Property Name="address" Type="nchar" MaxLength="50" />
-    <Property Name="gender" Type="nchar" MaxLength="50" />
-    <Property Name="password" Type="nchar" MaxLength="50" />
+    <Property Name="email" Type="nchar" MaxLength="100" />
+    <Property Name="address" Type="nchar" MaxLength="100" />
+    <Property Name="gender" Type="nchar" MaxLength="10" />
+    <Property Name="password" Type="nchar" MaxLength="10" />
     <Property Name="role_id" Type="int" />
   </EntityType>
   <Association Name="FK_users_role">

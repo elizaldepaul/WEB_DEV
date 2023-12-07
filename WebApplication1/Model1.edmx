@@ -20,10 +20,10 @@
           <Property Name="first_name" Type="nchar" MaxLength="50" />
           <Property Name="last_name" Type="nchar" MaxLength="50" />
           <Property Name="age" Type="int" />
-          <Property Name="email" Type="nchar" MaxLength="50" />
-          <Property Name="address" Type="nchar" MaxLength="50" />
-          <Property Name="gender" Type="nchar" MaxLength="50" />
-          <Property Name="password" Type="nchar" MaxLength="50" />
+          <Property Name="email" Type="nchar" MaxLength="100" />
+          <Property Name="address" Type="nchar" MaxLength="100" />
+          <Property Name="gender" Type="nchar" MaxLength="10" />
+          <Property Name="password" Type="nchar" MaxLength="10" />
           <Property Name="role_id" Type="int" />
         </EntityType>
         <Association Name="FK_users_role">
@@ -67,10 +67,10 @@
           <Property Name="first_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="last_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="age" Type="Int32" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="address" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="gender" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="role_id" Type="Int32" />
           <NavigationProperty Name="role" Relationship="Self.FK_users_role" FromRole="users" ToRole="role" />
         </EntityType>
@@ -86,7 +86,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="friendsEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="friendsEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">
@@ -99,7 +99,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="friendsModelStoreContainer" CdmEntityContainer="friendsEntities">
+        <EntityContainerMapping StorageEntityContainer="friendsModelStoreContainer" CdmEntityContainer="friendsEntities1">
           <EntitySetMapping Name="roles">
             <EntityTypeMapping TypeName="friendsModel.role">
               <MappingFragment StoreEntitySet="role">
