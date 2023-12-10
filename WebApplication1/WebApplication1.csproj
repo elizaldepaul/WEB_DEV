@@ -128,6 +128,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Admin.cs" />
+    <Compile Include="Controllers\Authentication.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,6 +170,7 @@
     <Content Include="Content\assets\img\favicon.png" />
     <Content Include="Content\assets\img\hero-img.png" />
     <Content Include="Content\assets\img\log in.svg" />
+    <Content Include="Content\assets\img\log_in.svg" />
     <Content Include="Content\assets\img\portfolio\portfolio-1.jpg" />
     <Content Include="Content\assets\img\portfolio\portfolio-2.jpg" />
     <Content Include="Content\assets\img\portfolio\portfolio-3.jpg" />
@@ -2161,14 +2164,16 @@
     <Content Include="Views\Shared\New_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\ndex.cshtml" />
     <Content Include="Views\Home\Layout.cshtml" />
     <Content Include="Web.Config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\UserLayout.cshtml" />
     <Content Include="Views\Home\ShowUser.cshtml" />
-    <Content Include="Views\Home\AddActivities.cshtml" />
     <Content Include="Views\Home\UserUpdate.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Shared\AdminLayout.cshtml" />
+    <Content Include="Views\Home\AddActivities.cshtml" />
+    <Content Include="Views\Home\UserDashboard.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

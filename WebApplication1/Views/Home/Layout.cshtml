@@ -21,7 +21,7 @@
 
 
 <!-- Login Modal -->
-<div class="modal fade" style="margin: 10% auto;" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+<div class="modal fade" style="margin: auto auto;" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -38,13 +38,13 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block " id="image">
-                                <img src="~/Content/assets/img/log in.svg" height="100%" width="100%" />
+                                <img src="~/Content/assets/img/log_in.svg" height="100%" width="100%" />
                             </div>
                             <div class="col-lg-6">
                                 <div class="text-center">
                                     <!-- <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1> -->
                                 </div>
-                                <form action="../php/authenticate.php" method="post" class="user">
+                                <form action="Authenticate" method="post" class="user">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp" name="email"
@@ -54,7 +54,7 @@
                                         <input type="password" class="form-control form-control-user" name="password"
                                                placeholder="Password">
                                     </div>
-                                    <input type="hidden" name="id" value="<?php echo $row[" ID"]; ?>
+                                    
                                     <input class="btn btn-primary btn-user mb-2 btn-block custom-input" name="login"
                                            type="submit" value="Log in">
                                 </form>
