@@ -27,5 +27,6 @@ namespace WebApplication1
     
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<activity> activities { get; set; }
     }
 }

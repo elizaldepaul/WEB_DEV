@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -140,22 +141,134 @@ namespace WebApplication1.Controllers
         public ActionResult AddActivities(FormCollection activity)
         {
             String activity_name = activity["activity_name"];
-            String activity_date = activity["activity_date"];
-            String activity_time = activity["activity_time"];
+
+            // Parse only the date part from the string
+            DateTime activity_date = Convert.ToDateTime(activity["activity_date"]);
+            var actdate = activity_date.Date;
+
+            // Convert the string to TimeSpan
+            TimeSpan activity_time;
+            if (!TimeSpan.TryParse(activity["activity_time"], out activity_time))
+            {
+                // Handle invalid time format (e.g., show an error message to the user)
+                return View("Error");
+            }
+
             String activity_location = activity["activity_location"];
             String activity_ootd = activity["activity_ootd"];
-            String date_created = activity["date_created"];
+            int id = Convert.ToInt16(activity["user_id"]);
 
             activity act = new activity();
+
+            act.activity_name = activity_name;
+            act.activity_date = actdate; // Assign the parsed date
+            act.activity_time = activity_time;
+            act.activity_location = activity_location;
+            act.activty_ootd_description = activity_ootd;
+            act.user_id = id;
+
+            //DateTime activity_date = DateTime.Parse("12/12/2023");
+           // string formattedDate = activity_date.ToString("yyyy-MM-dd");
+
+            // Now, 'formattedDate' contains the formatted date "2023-12-12"
+
 
             // tiwason ni nako ugma daun HAHAHA para makatabang nako sa mag patabang mga
             // activity ni sya dre in case makalimot ko hehe HAHHAH 
 
             databaseEntities1 fe = new databaseEntities1();
-            fe.users.Add(use);
+            fe.activities.Add(act);
             fe.SaveChanges();
             return View();
         }
 
+
+
+
+        [HttpPost]
+        public ActionResult Activity(int id)
+        {
+            int x = id;
+            databaseEntities1 act = new databaseEntities1();
+            var activity = (from a in act.activities where a.activity_id == x select a).ToList();
+            ViewData["Activity"] = activity;
+            return View();
+            
+        }
+        public ActionResult ActivityUpdate(FormCollection activity, int id)
+        {
+            String activity_name = activity["activity_name"];
+
+            // Parse only the date part from the string
+            DateTime activity_date = Convert.ToDateTime(activity["activity_date"]);
+
+            // Parse only the date part from the string
+          
+
+
+
+            // Convert the string to TimeSpan
+            TimeSpan activity_time;
+            if (!TimeSpan.TryParse(activity["activity_time"], out activity_time))
+            {
+                // Handle invalid time format (e.g., show an error message to the user)
+                return View("Error");
+            }
+
+            String activity_location = activity["activity_location"];
+            String activity_ootd = activity["activity_ootd"];
+
+            activity act = new activity();
+
+            act.activity_name = activity_name;
+            act.activity_date = activity_date.Date; // Assign the parsed date
+            act.activity_time = activity_time;
+            act.activity_location = activity_location;
+            act.activty_ootd_description = activity_ootd;
+            databaseEntities1 act1 = new databaseEntities1();
+
+            act1.SaveChanges();
+
+            return RedirectToAction("User");
+        }
+
+
+
+        public ActionResult User()
+        {
+            // Retrieve the user ID from the session
+            int userId = (int)Session["user_id"];
+
+            databaseEntities1 act = new databaseEntities1();
+
+            // Select all activities based on the user ID
+            var userActivities = (from a in act.activities
+                                  where a.user_id == userId
+                                  select a).ToList();
+
+            ViewData["ActivityList"] = userActivities;
+
+            return View();
+        }
+
+        public ActionResult SetActivity(int id)
+        {
+
+            databaseEntities1 act = new databaseEntities1();
+
+            // Select all activities based on the user ID
+            var activity = (from a in act.activities
+                                  where a.activity_id == id
+                                  select a).ToList();
+
+            ViewData["Activity"] = activity;
+
+            return View();
+        }
+
+
+
     }
+
+
 }

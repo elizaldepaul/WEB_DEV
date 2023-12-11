@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "SetActivity";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+
+       
+        <tr>
+            <td width="30%"><label>Activity Name</label></td>
+            <td width="70%">ActIvity Name</td>
+        </tr>    
+        <tr>
+            <td width="30%"><label>Notes</label></td>
+            <td width="70%">
+                <textarea type="text" class="form-control" id="notes" name="activity_remarks" required></textarea>
+            </td>
+
+        </tr>
+        <tr>
+
+            <td colspan="2" align="center">
+                <form>
+                    <button type="button" class="btn btn-primary mark_as_done" style="margin-right:30px;" id="'. $row[" activity_id"].'">Mark As Done</button>
+                </form>
+                <form>
+                    <button type="button" class="btn btn-danger mark_as_cancel" id="'. $row[" activity_id"].'">Cancel Activty</button>
+                </form>
+            </td>
+
+        </tr>
+   
+    </table>
+</div>
+
+
