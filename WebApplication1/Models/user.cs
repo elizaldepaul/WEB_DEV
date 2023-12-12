@@ -7,14 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1
+namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
     
     public partial class user
     {
-        public int users_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.activities = new HashSet<activity>();
+        }
+    
+        public int user_id { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
         public string email { get; set; }
@@ -24,6 +30,8 @@ namespace WebApplication1
         public string gender { get; set; }
         public Nullable<int> role_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<activity> activities { get; set; }
         public virtual role role { get; set; }
     }
 }

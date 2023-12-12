@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebApplication1.Controllers
             string email = fc["email"];
             string password = fc["password"];
 
-            databaseEntities1 authenticateduser = new databaseEntities1();
+            databaseEntities2 authenticateduser = new databaseEntities2();
 
             // Assuming there is a 'users' DbSet in your database context
             user authenticatedUser = authenticateduser.users.FirstOrDefault(u => u.password == password && u.email == email);
@@ -25,7 +26,7 @@ namespace WebApplication1.Controllers
                 {
                     Session["first_name"] = authenticatedUser.first_name;
                     Session["last_name"] = authenticatedUser.last_name;
-                    Session["user_id"] = authenticatedUser.users_id;
+                    Session["user_id"] = authenticatedUser.user_id;
                   //  ViewData["admin"] = authenticatedUser;
                     return RedirectToAction("Admin");
                 }
@@ -33,9 +34,9 @@ namespace WebApplication1.Controllers
                 {
                     Session["first_name"] = authenticatedUser.first_name;
                     Session["last_name"] = authenticatedUser.last_name;
-                    Session["user_id"] = authenticatedUser.users_id;
+                    Session["user_id"] = authenticatedUser.user_id;
                     // ViewData["user"] = authenticatedUser;
-                    return RedirectToAction("User");
+                    return RedirectToAction("UserPage");
                 }
 
                

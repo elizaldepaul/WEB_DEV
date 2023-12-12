@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1
+namespace WebApplication1.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class databaseEntities1 : DbContext
+    public partial class databaseEntities2 : DbContext
     {
-        public databaseEntities1()
-            : base("name=databaseEntities1")
+        public databaseEntities2()
+            : base("name=databaseEntities2")
         {
         }
     
@@ -25,8 +25,8 @@ namespace WebApplication1
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<activity> activities { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<activity> activities { get; set; }
     }
 }

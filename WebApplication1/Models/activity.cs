@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1
+namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,9 @@ namespace WebApplication1
         public Nullable<System.DateTime> activity_date { get; set; }
         public Nullable<System.TimeSpan> activity_time { get; set; }
         public string activity_location { get; set; }
-        public string activty_ootd_description { get; set; }
+        public string activity_ootd { get; set; }
         public Nullable<int> user_id { get; set; }
+    
+        public virtual user user { get; set; }
     }
 }

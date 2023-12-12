@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -17,14 +18,12 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -33,17 +32,13 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Admin()
         {
-            databaseEntities1 user = new databaseEntities1();
+            databaseEntities2 user = new databaseEntities2();
 
             var userList = (from a in user.users select a).ToList();
 
             ViewData["UserList"] = userList;
             return View();
         }
-
-
-
-
         public ActionResult AddUserToDatabase(FormCollection fc)
         {
 
@@ -67,12 +62,12 @@ namespace WebApplication1.Controllers
 
 
 
-            databaseEntities1 fe = new databaseEntities1();
+            databaseEntities2 fe = new databaseEntities2();
             fe.users.Add(use);
             fe.SaveChanges();
 
 
-            Session["user_id"] = use.users_id;
+            Session["user_id"] = use.user_id;
             Session["role_id"] = use.role_id;
             Session["first_name"] = use.first_name;
             Session["last_name"] = use.last_name;
@@ -81,8 +76,6 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("User");
         }
-
-
         [HttpPost]
         public ActionResult UserUpdate(int id)
         {
@@ -90,20 +83,19 @@ namespace WebApplication1.Controllers
 
 
 
-            databaseEntities1 user = new databaseEntities1();
+            databaseEntities2 user = new databaseEntities2();
 
-            var selectedUser = (from a in user.users where a.users_id == x select a).ToList();
+            var selectedUser = (from a in user.users where a.user_id == x select a).ToList();
             ViewData["User"] = selectedUser;
 
             return View();
             //  return RedirectToAction("UserUpdate");  // Redirect to the appropriate action or view
         }
-
         public ActionResult Update(FormCollection fc, int id)
         {
-            databaseEntities1 rdbe = new databaseEntities1();
+            databaseEntities2 rdbe = new databaseEntities2();
             user u = (from a in rdbe.users
-                      where a.users_id == id
+                      where a.user_id == id
                       select a).FirstOrDefault();
 
             String new_first_name = fc["new_first_name"];
@@ -124,20 +116,17 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Admin");
         }
-
-
         public ActionResult UserDelete(int id)
         {
-            databaseEntities1 rdbe = new databaseEntities1();
+            databaseEntities2 rdbe = new databaseEntities2();
             user u = (from a in rdbe.users
-                      where a.users_id == id
+                      where a.user_id == id
                       select a).FirstOrDefault();
             rdbe.users.Remove(u);
             rdbe.SaveChanges();
 
             return RedirectToAction("Admin");
         }
-
         public ActionResult AddActivities(FormCollection activity)
         {
             String activity_name = activity["activity_name"];
@@ -164,11 +153,11 @@ namespace WebApplication1.Controllers
             act.activity_date = actdate; // Assign the parsed date
             act.activity_time = activity_time;
             act.activity_location = activity_location;
-            act.activty_ootd_description = activity_ootd;
+            act.activity_ootd = activity_ootd;
             act.user_id = id;
 
             //DateTime activity_date = DateTime.Parse("12/12/2023");
-           // string formattedDate = activity_date.ToString("yyyy-MM-dd");
+            // string formattedDate = activity_date.ToString("yyyy-MM-dd");
 
             // Now, 'formattedDate' contains the formatted date "2023-12-12"
 
@@ -176,24 +165,20 @@ namespace WebApplication1.Controllers
             // tiwason ni nako ugma daun HAHAHA para makatabang nako sa mag patabang mga
             // activity ni sya dre in case makalimot ko hehe HAHHAH 
 
-            databaseEntities1 fe = new databaseEntities1();
+            databaseEntities2 fe = new databaseEntities2();
             fe.activities.Add(act);
             fe.SaveChanges();
             return View();
         }
-
-
-
-
         [HttpPost]
         public ActionResult Activity(int id)
         {
             int x = id;
-            databaseEntities1 act = new databaseEntities1();
+            databaseEntities2 act = new databaseEntities2();
             var activity = (from a in act.activities where a.activity_id == x select a).ToList();
             ViewData["Activity"] = activity;
             return View();
-            
+
         }
         public ActionResult ActivityUpdate(FormCollection activity, int id)
         {
@@ -203,7 +188,7 @@ namespace WebApplication1.Controllers
             DateTime activity_date = Convert.ToDateTime(activity["activity_date"]);
 
             // Parse only the date part from the string
-          
+
 
 
 
@@ -224,22 +209,19 @@ namespace WebApplication1.Controllers
             act.activity_date = activity_date.Date; // Assign the parsed date
             act.activity_time = activity_time;
             act.activity_location = activity_location;
-            act.activty_ootd_description = activity_ootd;
-            databaseEntities1 act1 = new databaseEntities1();
+            act.activity_ootd = activity_ootd;
+            databaseEntities2 act1 = new databaseEntities2();
 
             act1.SaveChanges();
 
             return RedirectToAction("User");
-        }
-
-
-
-        public ActionResult User()
+        } 
+        public ActionResult UserPage()
         {
             // Retrieve the user ID from the session
             int userId = (int)Session["user_id"];
 
-            databaseEntities1 act = new databaseEntities1();
+            databaseEntities2 act = new databaseEntities2();
 
             // Select all activities based on the user ID
             var userActivities = (from a in act.activities
@@ -250,11 +232,10 @@ namespace WebApplication1.Controllers
 
             return View();
         }
-
         public ActionResult SetActivity(int id)
         {
 
-            databaseEntities1 act = new databaseEntities1();
+            databaseEntities2 act = new databaseEntities2();
 
             // Select all activities based on the user ID
             var activity = (from a in act.activities
@@ -266,8 +247,16 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public ActionResult MarkAsDone(int id)
+        {
+            int x = id;
+            databaseEntities2 act = new databaseEntities2();
+            var done = (from a in act.activities where a.activity_id == x select a).ToList();
+            ViewData["Activity"] = done
+                ;
+            return View();
 
-
+        }
     }
 
 

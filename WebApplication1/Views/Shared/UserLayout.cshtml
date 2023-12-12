@@ -93,7 +93,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="@Url.Action("User", "Home")">
+                <a class="nav-link" href="@Url.Action("UserDashboard", "Home")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Your Dashboard</span>
                 </a>
@@ -110,10 +110,25 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("User", "Home")">
+                <a class="nav-link" href="@Url.Action("UserPage", "Home")">
                     <!-- <i class="fas fa-fw fa-chart-area"></i> -->
                     <i class="fa-solid fa-calendar-plus" style="color: #7082a8;"></i>
                     <span>Add Activities</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("UserPage", "Home")">
+                    <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+                    <i class="fa-solid fa-calendar-plus" style="color: #7082a8;"></i>
+                    <span>Done Activities</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("UserPage", "Home")">
+                    <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+                    <i class="fa-solid fa-calendar-plus" style="color: #7082a8;"></i>
+                    <span>Cancelled Activities</span>
                 </a>
             </li>
 
