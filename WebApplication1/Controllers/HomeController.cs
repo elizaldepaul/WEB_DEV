@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -16,6 +17,13 @@ namespace WebApplication1.Controllers
         }
         public ActionResult UserDashboard()
         {
+            databaseEntities1 db = new databaseEntities1();
+
+            var announcementList = (from a in db.announcements select a).ToList();
+            ViewData["announcementList"] = announcementList;
+
+           
+
             return View();
         }
         public ActionResult About()
@@ -32,13 +40,18 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Admin()
         {
-            databaseEntities2 user = new databaseEntities2();
+            databaseEntities1 user = new databaseEntities1();
+
+            var announcementList = (from a in user.announcements select a).ToList();
+
+            ViewData["announcementList"] = announcementList;
 
             var userList = (from a in user.users select a).ToList();
 
             ViewData["UserList"] = userList;
             return View();
         }
+
         public ActionResult AddUserToDatabase(FormCollection fc)
         {
 
@@ -62,7 +75,7 @@ namespace WebApplication1.Controllers
 
 
 
-            databaseEntities2 fe = new databaseEntities2();
+            databaseEntities1 fe = new databaseEntities1();
             fe.users.Add(use);
             fe.SaveChanges();
 
@@ -74,7 +87,7 @@ namespace WebApplication1.Controllers
 
             //insert the code that will save these information to the DB
 
-            return RedirectToAction("User");
+            return RedirectToAction("UserDashboard");
         }
         [HttpPost]
         public ActionResult UserUpdate(int id)
@@ -83,7 +96,7 @@ namespace WebApplication1.Controllers
 
 
 
-            databaseEntities2 user = new databaseEntities2();
+            databaseEntities1 user = new databaseEntities1();
 
             var selectedUser = (from a in user.users where a.user_id == x select a).ToList();
             ViewData["User"] = selectedUser;
@@ -91,9 +104,10 @@ namespace WebApplication1.Controllers
             return View();
             //  return RedirectToAction("UserUpdate");  // Redirect to the appropriate action or view
         }
+
         public ActionResult Update(FormCollection fc, int id)
         {
-            databaseEntities2 rdbe = new databaseEntities2();
+            databaseEntities1 rdbe = new databaseEntities1();
             user u = (from a in rdbe.users
                       where a.user_id == id
                       select a).FirstOrDefault();
@@ -116,9 +130,10 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Admin");
         }
+
         public ActionResult UserDelete(int id)
         {
-            databaseEntities2 rdbe = new databaseEntities2();
+            databaseEntities1 rdbe = new databaseEntities1();
             user u = (from a in rdbe.users
                       where a.user_id == id
                       select a).FirstOrDefault();
@@ -127,101 +142,87 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Admin");
         }
-        public ActionResult AddActivities(FormCollection activity)
+
+        public ActionResult AddActivities(FormCollection actvs)
         {
-            String activity_name = activity["activity_name"];
-
-            // Parse only the date part from the string
-            DateTime activity_date = Convert.ToDateTime(activity["activity_date"]);
-            var actdate = activity_date.Date;
-
-            // Convert the string to TimeSpan
+            String activity_name = actvs["activity_name"];
+            String activity_date = actvs["activity_date"];
+            String activity_status = "Pending";
             TimeSpan activity_time;
-            if (!TimeSpan.TryParse(activity["activity_time"], out activity_time))
+            if (!TimeSpan.TryParse(actvs["activity_time"], out activity_time))
             {
-                // Handle invalid time format (e.g., show an error message to the user)
                 return View("Error");
             }
-
-            String activity_location = activity["activity_location"];
-            String activity_ootd = activity["activity_ootd"];
-            int id = Convert.ToInt16(activity["user_id"]);
-
+            String activity_location = actvs["activity_location"];
+            String activity_ootd = actvs["activity_ootd"];
+            int id = Convert.ToInt16(actvs["user_id"]);
             activity act = new activity();
-
             act.activity_name = activity_name;
-            act.activity_date = actdate; // Assign the parsed date
+            act.activity_date = activity_date; // Assign the parsed date
             act.activity_time = activity_time;
+            act.activity_status = activity_status;
             act.activity_location = activity_location;
             act.activity_ootd = activity_ootd;
             act.user_id = id;
-
-            //DateTime activity_date = DateTime.Parse("12/12/2023");
-            // string formattedDate = activity_date.ToString("yyyy-MM-dd");
-
-            // Now, 'formattedDate' contains the formatted date "2023-12-12"
-
-
-            // tiwason ni nako ugma daun HAHAHA para makatabang nako sa mag patabang mga
-            // activity ni sya dre in case makalimot ko hehe HAHHAH 
-
-            databaseEntities2 fe = new databaseEntities2();
+            databaseEntities1 fe = new databaseEntities1();
             fe.activities.Add(act);
             fe.SaveChanges();
-            return View();
+            return RedirectToAction("UserPage");
         }
         [HttpPost]
         public ActionResult Activity(int id)
         {
-            int x = id;
-            databaseEntities2 act = new databaseEntities2();
-            var activity = (from a in act.activities where a.activity_id == x select a).ToList();
-            ViewData["Activity"] = activity;
-            return View();
-
+            using (databaseEntities1 actv = new databaseEntities1())
+            {
+                List<activity> pendingActivities = actv.activities
+                    .Where(a => a.activity_id == id)
+                    .ToList();
+                return View(pendingActivities);
+            }
         }
-        public ActionResult ActivityUpdate(FormCollection activity, int id)
+
+        public ActionResult ActivityUpdate(FormCollection act, int id)
         {
-            String activity_name = activity["activity_name"];
-
-            // Parse only the date part from the string
-            DateTime activity_date = Convert.ToDateTime(activity["activity_date"]);
-
-            // Parse only the date part from the string
+            databaseEntities1 rdbe = new databaseEntities1();
+            activity acts = (from a in rdbe.activities
+                             where a.activity_id == id
+                             select a).FirstOrDefault();
 
 
 
-
-            // Convert the string to TimeSpan
+            string activity_name = act["activity_name"];
+            string activity_date = act["activity_date"];
             TimeSpan activity_time;
-            if (!TimeSpan.TryParse(activity["activity_time"], out activity_time))
+            if (!TimeSpan.TryParse(act["activity_time"], out activity_time))
             {
                 // Handle invalid time format (e.g., show an error message to the user)
                 return View("Error");
             }
 
-            String activity_location = activity["activity_location"];
-            String activity_ootd = activity["activity_ootd"];
 
-            activity act = new activity();
 
-            act.activity_name = activity_name;
-            act.activity_date = activity_date.Date; // Assign the parsed date
-            act.activity_time = activity_time;
-            act.activity_location = activity_location;
-            act.activity_ootd = activity_ootd;
-            databaseEntities2 act1 = new databaseEntities2();
+            string activity_ootd = act["activity_ootd"];
+            string activity_location = act["activity_location"];
 
-            act1.SaveChanges();
 
-            return RedirectToAction("User");
-        } 
+            acts.activity_name = activity_name;
+            acts.activity_date = activity_date;
+            acts.activity_time = activity_time;
+            acts.activity_ootd = activity_ootd;
+            acts.activity_location = activity_location;
+
+
+            rdbe.SaveChanges();
+
+            return RedirectToAction("UserPage");
+        }
+
         public ActionResult UserPage()
         {
             // Retrieve the user ID from the session
             int userId = (int)Session["user_id"];
 
-            databaseEntities2 act = new databaseEntities2();
+            databaseEntities1 act = new databaseEntities1();
 
             // Select all activities based on the user ID
             var userActivities = (from a in act.activities
@@ -232,32 +233,106 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+
         public ActionResult SetActivity(int id)
         {
 
-            databaseEntities2 act = new databaseEntities2();
+            databaseEntities1 act = new databaseEntities1();
 
             // Select all activities based on the user ID
             var activity = (from a in act.activities
-                                  where a.activity_id == id
-                                  select a).ToList();
+                            where a.activity_id == id
+                            select a).ToList();
 
             ViewData["Activity"] = activity;
 
             return View();
         }
 
-        public ActionResult MarkAsDone(int id)
+        public ActionResult SetAct(FormCollection set)
         {
-            int x = id;
-            databaseEntities2 act = new databaseEntities2();
-            var done = (from a in act.activities where a.activity_id == x select a).ToList();
-            ViewData["Activity"] = done
-                ;
-            return View();
+            int id = Convert.ToInt32(set["id"]);
+            String activity_remarks = set["activity_remarks"];
+            String activity_status = set["activity_status"];
 
+            using (databaseEntities1 actv = new databaseEntities1())
+            {
+                activity existingActivity = actv.activities.Find(id);
+                if (existingActivity != null)
+                {
+                    existingActivity.activity_status = activity_status;
+                    existingActivity.remarks = activity_remarks;
+                    actv.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("UserPage");
         }
+
+        public ActionResult GetDoneActivities()
+        {
+            using (databaseEntities1 actv = new databaseEntities1())
+            {
+                var user_id = (int)Session["user_id"];
+                // Assuming "activities" is the DbSet property in your database context
+                List<activity> doneActivities = actv.activities
+                     .Where(a => a.user_id == user_id)
+                    .ToList();
+
+                return View(doneActivities);
+            }
+        }
+
+        public ActionResult GetCancelledActivities()
+        {
+            using (databaseEntities1 actv = new databaseEntities1())
+            {
+                var user_id = (int)Session["user_id"];
+                // Assuming "activities" is the DbSet property in your database context
+                List<activity> cancelledActivities = actv.activities
+                     .Where(a => a.user_id == user_id)
+                    .ToList();
+
+                return View(cancelledActivities);
+            }
+        }
+        public ActionResult Logout()
+        {
+            // Sign out the user
+            FormsAuthentication.SignOut();
+
+            // Clear session variables if needed
+            Session.Clear();
+            Session.Abandon();
+
+            // Redirect to the login page or any other page after logout
+            return RedirectToAction("Layout"); // Change "Login" and "Account" to your actual login page and controller
+        }
+
+
+        public ActionResult AddAnnouncement(FormCollection ann)
+        {
+            
+                string announcementText = ann["announcement"];
+                string announcementTitle = ann["announcement_title"];
+
+                announcement announce = new announcement();
+                announce.announcement1 = announcementText;
+                announce.announcement_title = announcementTitle;
+
+                using (databaseEntities1 fe = new databaseEntities1())
+                {
+                    fe.announcements.Add(announce);
+                    fe.SaveChanges();
+                }
+
+                // Redirect to the Announcements page (assuming you have an Announcements controller with an Index action)
+                return RedirectToAction("Admin" );
+          
+        }
+
     }
 
-
 }
+
+

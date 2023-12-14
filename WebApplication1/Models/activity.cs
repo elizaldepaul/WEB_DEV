@@ -16,12 +16,12 @@ namespace WebApplication1.Models
     {
         public int activity_id { get; set; }
         public string activity_name { get; set; }
-        public Nullable<System.DateTime> activity_date { get; set; }
+        public string activity_date { get; set; }
         public Nullable<System.TimeSpan> activity_time { get; set; }
         public string activity_location { get; set; }
         public string activity_ootd { get; set; }
         public Nullable<int> user_id { get; set; }
-    
-        public virtual user user { get; set; }
+        public string remarks { get; set; }
+        public string activity_status { get; set; }
     }
 }

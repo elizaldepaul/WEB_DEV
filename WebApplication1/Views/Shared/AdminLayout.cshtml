@@ -1,6 +1,10 @@
 ﻿
 @{
     Layout = null;
+    var user_id = Session["users_id"];
+    var first_name = Session["first_name"];
+    var last_name = Session["last_name"];
+    var role_id = Session["role_id"];
 }
 
 <!DOCTYPE html>
@@ -131,7 +135,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    <?php echo $firstname . " " . $lastname; ?>
+                                  @first_name @last_name
                                 </span>
                                 <img class="img-profile rounded-circle" src="/Content/img/undraw_profile.svg">
                             </a>
@@ -355,14 +359,20 @@
                                                     </div>
                                                     <div class="modal-content">
 
-                                                        <form action="php/announcement.php" method="post"
+                                                        <form action="AddAnnouncement" method="post"
                                                               autocomplete="off" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <label for="Name">Announcements:</label>
+                                                                <textarea type="text" style="height: 50px;"
+                                                                          name="announcement_title" value=""></textarea>
+                                                            </div>
 
                                                             <div class="form-group">
                                                                 <label for="Name">Announcements:</label>
                                                                 <textarea style="height: 300px;" type="text"
                                                                           name="announcement" value=""></textarea>
                                                             </div>
+
 
 
                                                             <div class="text-center">
@@ -442,7 +452,7 @@
                             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" href="php/logout.php">Logout</a>
+                                <a class="btn btn-primary" href="@Url.Action("Logout", "Home")">Logout</a>
                             </div>
                         </div>
                     </div>

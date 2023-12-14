@@ -1,8 +1,10 @@
 ﻿@using WebApplication1.Models;
+@model List<WebApplication1.Models.activity>
 @{
     ViewBag.Title = "Activity";
     Layout = "~/Views/Shared/UserLayout.cshtml";
-    var selectedAct = (IEnumerable<activity>)ViewData["Activity"];
+
+
 
 }
 
@@ -64,7 +66,7 @@
                         </div>
 
                         @{
-                            foreach (var act in selectedAct)
+                            foreach (var act in Model)
                             {
 
                                 <form action="ActivityUpdate" method="post">

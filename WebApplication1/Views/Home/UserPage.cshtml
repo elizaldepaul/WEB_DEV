@@ -1,13 +1,28 @@
 ﻿
 @using WebApplication1.Models;
 
+
 @{
     ViewBag.Title = "UserPage";
     Layout = "~/Views/Shared/UserLayout.cshtml";
     var user_id = Session["user_id"];
-
-    // Assuming that "ActivityList" is a key in ViewData, you retrieve the list of activities
+    var role_id = Session["role_id"];
     var ActivityList = (IEnumerable<activity>)ViewData["ActivityList"];
+
+    if (role_id != null || (int)role_id == 2)
+    {
+
+    }
+    else
+    {
+        <script>
+            window.location.href = '@Url.Action("Layout", "Home")';
+        </script>
+    }
+
+
+
+
 }
 
 
@@ -186,7 +201,7 @@
                                                     </div>
                                                     @*<input type="hidden" name="activity_owner" id="activity_owner"
                                                         value="<?php echo $_SESSION['Email']; ?>"*@
-                                                    <input type="text" name="user_id"
+                                                    <input type="hidden" name="user_id"
                                                            value="@user_id">
                                                     <label for="Meridiem">Activity Ootd:</label>
                                                     <input type="text" name="activity_ootd" value=""><br>
@@ -226,13 +241,13 @@
                         modal.style.display = "none";
                     }
 
-                                                                    // Close the modal if the user clicks outside of it
-                                                                    // window.onclick = function (event) {
-                                                                    //     var modal = document.getElementById("myModal");
-                                                                    //     if (event.target === modal) {
-                                                                    //         modal.style.display = "none";
-                                                                    //     }
-                                                                    // }
+                                                                                    // Close the modal if the user clicks outside of it
+                                                                                    // window.onclick = function (event) {
+                                                                                    //     var modal = document.getElementById("myModal");
+                                                                                    //     if (event.target === modal) {
+                                                                                    //         modal.style.display = "none";
+                                                                                    //     }
+                                                                                    // }
                 </script>
 
                 <!-- =======================================================   end of add activity modal =============================================================== -->
@@ -273,13 +288,8 @@
                                 }
                                 else
                                 {
-                                    foreach (var act in ActivityList)
+                                    foreach (var act in ActivityList.Where(a => a.activity_status == "Pending"))
                                     {
-
-
-
-
-
                                         <tr>
                                             <td>
                                                 @act.activity_name
@@ -294,25 +304,18 @@
                                                 @act.activity_location
                                             </td>
                                             <td>
-                                                @*<img width="100px" height="100px"
-                                                    src="activity_image/<?php echo $row[" activity_ootd"]; ?>" alt="">*@
                                                 @act.activity_ootd
-
                                             </td>
-
-
                                             <td>
                                                 <form action="Activity" method="post">
                                                     <input type="hidden" name="id" value="@act.activity_id" />
-                                                    <button type="submit" name="edit" value=""
-                                                            class=" btn btn-primary  mb-2 btn-user  btn-block edit_data">
+                                                    <button type="submit" name="edit" value="" class=" btn btn-primary  mb-2 btn-user  btn-block edit_data">
                                                         Edit
                                                     </button>
                                                 </form>
                                                 <form action="SetActivity" method="post">
                                                     <input type="hidden" id="id" name="id" value="@act.activity_id" />
-                                                    <button type="submit" name="edit" value="Set"
-                                                            class=" btn btn-primary  mb-2 btn-user  btn-block edit_data">
+                                                    <button type="submit" name="edit" value="Set" class=" btn btn-primary  mb-2 btn-user  btn-block edit_data">
                                                         Set
                                                     </button>
                                                 </form>
@@ -320,6 +323,7 @@
                                         </tr>
                                     }
                                 }
+
                             </tbody>
                         </table>
                     </div>
@@ -409,7 +413,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="php/logout.php">Logout</a>
+                    <a class="btn btn-primary" href="@Url.Action("Logout", "Home")">Logout</a>
                 </div>
             </div>
         </div>

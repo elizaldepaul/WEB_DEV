@@ -4,6 +4,7 @@
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
     var userList = (IEnumerable<user>)ViewData["UserList"];
+    var AnnouncementList = ViewData["announcementList"] as IEnumerable<announcement>;
 
 }
 
@@ -16,13 +17,12 @@
 
     .btn-block {
         display: flex !important;
-       
-        justify-content:space-around;
+        justify-content: space-around;
     }
 
     .view_data {
         width: 20px;
-        font-size:15px;
+        font-size: 15px;
     }
 
     .input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="button"].btn-block {
@@ -50,81 +50,51 @@
 
 
 <!-- Pie Chart -->
-<div class="col-xl-4 col-lg-5">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Gender</h6>
-            <div class="dropdown no-arrow">
-                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </a>
 
 
-            </div>
-        </div>
-        <div class="card-body">
-            <?php
+<style>
+    .align {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 20px;
+        margin-left: 14rem;
+    }
 
-            $db_connection = connect_to_database();
-            $query = "SELECT gender, COUNT(*) AS count FROM user GROUP BY gender";
-            $result = mysqli_query($db_connection, $query);
-
-            $dataPoints = array();
-
-            while ($row = mysqli_fetch_assoc($result)) {
-            $label = ucfirst($row['gender']);
-            $y = $row['count'];
-            $dataPoints[] = array("label" => $label, "y" => $y);
-            }
-            ?>
-            <script>
-                window.onload = function () {
-                    var chart = new CanvasJS.Chart("chartContainer", {
-                        animationEnabled: true,
-                        title: {
-
-                        },
-                        data: [{
-                            type: "pie",
-                            yValueFormatString: "#,##\"\"",
-                            indexLabel: "{label} ({y})",
-                            dataPoints: <? php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                                                                    }]
-                                                                });
-                chart.render();
-                                                            }
-            </script>
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-        </div>
-    </div>
-</div>
-
+    .card-container {
+        display: inline-block;
+        width: 100%;
+        break-inside: avoid;
+    }
+</style>
 
 <h1 class="h3 mb-2 text-gray-800 ml-3">Announcements</h1>
-<?php
-$query = "SELECT * FROM announcement ORDER BY created_at DESC";
-$announcement = $db_connection->query($query);
-?>
-<div class="align">
-    <?php while ($row = $announcement->fetch_assoc()) { ?>
-    <div class="card-container">
-        <div class="card border-success ml-4 mb-3" style="max-width: 18rem;">
-            <div class="card-header bg-transparent border-success"><?php echo $row['announcement_title']; ?></div>
-            <div class="card-body text-success">
-                <p class="card-text"><?php echo $row['announcement']; ?></p>
+
+@if (AnnouncementList != null && AnnouncementList.Any())
+{
+    <div class="align">
+        
+        @foreach (var announce in AnnouncementList)
+        {
+            <div class="card-container">
+                <div class="card border-success ml-4 mb-3" style="max-width: 18rem;">
+                    <div class="card-header bg-transparent border-success">
+                        @announce.announcement_title
+                    </div>
+                    <div class="card-body text-success">
+                        <p class="card-text">
+                            @announce.announcement1
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer bg-transparent border-success">
-                <?php echo date("F j, Y h:i A", strtotime($row["created_at"])); ?>
-            </div>
-        </div>
+        }
     </div>
-    <?php } ?>
-</div>
-<?php
-$sql = "SELECT * FROM user ORDER BY ID DESC";
-$users = mysqli_query($db_connection, $sql);
-?>
+}
+else
+{
+    <p style="color:red; font-weight:bold;" class="ml-4">No Announcements Yet!</p>
+}
+
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -173,18 +143,18 @@ $users = mysqli_query($db_connection, $sql);
 
                                         <div class="btn-block">
                                             <form action="UserUpdate" method="post">
-                                                <input type="hidden" name="id" value="@item.users_id" />
-                                                <button type="submit" name="edit" id="@item.users_id" class="btn btn-primary  mb-2 btn-user  btn-block edit_data">Edit</button>
-                                                
+                                                <input type="hidden" name="id" value="@item.user_id" />
+                                                <button type="submit" name="edit" id="@item.user_id" class="btn btn-primary  mb-2 btn-user  btn-block edit_data">Edit</button>
+
                                             </form>
 
                                             <form action="UserDelete" method="post">
-                                                <input type="hidden" name="id" value="@item.users_id" />
-                                                <button type="submit" name="edit" id="@item.users_id" class="btn btn-primary  mb-2 btn-user  btn-block edit_data">Delete</button>
+                                                <input type="hidden" name="id" value="@item.user_id" />
+                                                <button type="submit" name="edit" id="@item.user_id" class="btn btn-primary  mb-2 btn-user  btn-block edit_data">Delete</button>
 
                                             </form>
 
-                                                <!-- <input class="btn btn-primary  mb-2 btn-user  btn-block" type="submit" name="Edit" value="Edit"> -->
+                                            <!-- <input class="btn btn-primary  mb-2 btn-user  btn-block" type="submit" name="Edit" value="Edit"> -->
                                         </div>
                                     </td>
                                 </tr>

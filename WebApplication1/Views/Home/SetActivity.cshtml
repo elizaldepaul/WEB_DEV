@@ -1,38 +1,99 @@
-﻿
+﻿@using WebApplication1.Models;
 @{
     ViewBag.Title = "SetActivity";
     Layout = "~/Views/Shared/UserLayout.cshtml";
+    var ActivityList = (IEnumerable<activity>)ViewData["Activity"];
 }
+<style>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
+    /* Add your custom CSS styles here */
+    .container {
+        margin-top: 20px;
+    }
 
-       
-        <tr>
-            <td width="30%"><label>Activity Name</label></td>
-            <td width="70%">ActIvity Name</td>
-        </tr>    
-        <tr>
-            <td width="30%"><label>Notes</label></td>
-            <td width="70%">
-                <textarea type="text" class="form-control" id="notes" name="activity_remarks" required></textarea>
-            </td>
+    /* Center the form horizontally */
+    .col-lg-6 {
+        margin: 0 auto;
+        float: none;
+    }
 
-        </tr>
-        <tr>
+    /* Style labels and inputs */
+    label {
+        font-weight: bold;
+    }
 
-            <td colspan="2" align="center">
-                <form>
-                    <button type="button" class="btn btn-primary mark_as_done" style="margin-right:30px;" id="'. $row[" activity_id"].'">Mark As Done</button>
-                </form>
-                <form>
-                    <button type="button" class="btn btn-danger mark_as_cancel" id="'. $row[" activity_id"].'">Cancel Activty</button>
-                </form>
-            </td>
+    input[type="text"], input[type="date"], input[type="time"],
+    textarea , select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-        </tr>
-   
-    </table>
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Center the submit button */
+    .text-center {
+        text-align: center;
+    }
+
+    .sidebar {
+        width: 6.5rem;
+        min-height: 100vh;
+        position: fixed !important;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Set Your Activity</h1>
+                        </div>
+
+                        @foreach (var item in ActivityList)
+                        {
+                        <div class="table-responsive">
+
+                            <form action="SetAct" method="post">
+                                <input type="hidden" name="id" value="@item.activity_id">
+                                <label for="Name">Activity Name:</label>
+                                <input type="text" name="activity_name" value="@item.activity_name" disabled>
+                                <div class="form-group">
+                                    <label for="Name">Activity Status:</label>
+                                    <select name="activity_status">
+                                        <option  value="Done">Done</option>
+                                        <option value="Cancel">Cancel</option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Date">Activity Remarks:</label>
+                                    <textarea type="text" name="activity_remarks" required></textarea>
+                                    </div>
+                            
+
+                                <input type="submit" name="Update" value="Update">
+                                    </form>
+
+                        </div>
+                           
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 

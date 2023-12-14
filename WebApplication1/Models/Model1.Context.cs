@@ -13,10 +13,10 @@ namespace WebApplication1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class databaseEntities2 : DbContext
+    public partial class databaseEntities1 : DbContext
     {
-        public databaseEntities2()
-            : base("name=databaseEntities2")
+        public databaseEntities1()
+            : base("name=databaseEntities1")
         {
         }
     
@@ -27,6 +27,8 @@ namespace WebApplication1.Models
     
         public virtual DbSet<activity> activities { get; set; }
         public virtual DbSet<role> roles { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<announcement> announcements { get; set; }
     }
 }

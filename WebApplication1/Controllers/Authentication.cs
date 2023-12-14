@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
             string email = fc["email"];
             string password = fc["password"];
 
-            databaseEntities2 authenticateduser = new databaseEntities2();
+            databaseEntities1 authenticateduser = new databaseEntities1();
 
             // Assuming there is a 'users' DbSet in your database context
             user authenticatedUser = authenticateduser.users.FirstOrDefault(u => u.password == password && u.email == email);
@@ -27,7 +27,8 @@ namespace WebApplication1.Controllers
                     Session["first_name"] = authenticatedUser.first_name;
                     Session["last_name"] = authenticatedUser.last_name;
                     Session["user_id"] = authenticatedUser.user_id;
-                  //  ViewData["admin"] = authenticatedUser;
+                    Session["role_id"] = authenticatedUser.role_id;
+                    //  ViewData["admin"] = authenticatedUser;
                     return RedirectToAction("Admin");
                 }
                 else if (authenticatedUser.role_id == 2)
@@ -35,8 +36,9 @@ namespace WebApplication1.Controllers
                     Session["first_name"] = authenticatedUser.first_name;
                     Session["last_name"] = authenticatedUser.last_name;
                     Session["user_id"] = authenticatedUser.user_id;
+                    Session["role_id"] = authenticatedUser.role_id;
                     // ViewData["user"] = authenticatedUser;
-                    return RedirectToAction("UserPage");
+                    return RedirectToAction("UserDashboard");
                 }
 
                
@@ -47,7 +49,7 @@ namespace WebApplication1.Controllers
             }
 
             // Always return the "Login" view, whether authentication succeeds or fails
-            return View("Login");
+            return View("Layout");
         }
     }
 }
